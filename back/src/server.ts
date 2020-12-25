@@ -2,7 +2,7 @@ import { IData } from './typing'
 import { createServer } from 'http'
 import { Server, Socket } from 'socket.io'
 import { v4 as uuidv4 } from 'uuid'
-// import { publishLogs } from './db/redis/pub'
+import { publishLogs } from './db/redis/pub'
 const httpServer = createServer()
 
 let currentBet = 0
@@ -19,10 +19,10 @@ const disconnectClients = (): void => {
     clients.forEach(socket => socket.disconnect())
     clients.clear()
     clearTimeout(timerId)
-    // publishLogs({
-    //     auctionId: auctionId,
-    //     action: 'AUCTION ENDED'
-    // })
+    publishLogs({
+        auctionId: auctionId,
+        action: 'AUCTION ENDED'
+    })
 }
 
 const endAuction = (): NodeJS.Timeout => setTimeout(disconnectClients, betTimeout)
@@ -38,11 +38,11 @@ io.on('connection', (socket: Socket) => {
         timerId = endAuction()
         auctionId = uuidv4()
     }
-    // publishLogs({
-    //     auctionId: auctionId,
-    //     action: 'CONNECTION',
-    //     clientId: socket.id
-    // })
+    publishLogs({
+        auctionId: auctionId,
+        action: 'CONNECTION',
+        clientId: socket.id
+    })
 
     socket.on('message', (message) => {
         const data: IData = {
@@ -61,28 +61,28 @@ io.on('connection', (socket: Socket) => {
             currentBet = clientBet
             io.emit('message', message)
             data.isBetSet = true
-            // publishLogs(data)
+            publishLogs(data)
         } else {
             data.isBetSet = false
-            // publishLogs(data)
+            publishLogs(data)
         }
         timerId = endAuction()
     })
 
-    socket.on('disconnecting', () => {
-        console.log(`DISCONNECTING id: ${socket.id}`)
-        console.log(socket.rooms) // the Set contains at least the socket ID
-    })
+    // socket.on('disconnecting', () => {
+    //     console.log(`DISCONNECTING id: ${socket.id}`)
+    //     console.log(socket.rooms) // the Set contains at least the socket ID
+    // })
 
     socket.on('disconnect', (reason) => {
         console.log(`DISCONNECT id: ${socket.id}`)
         console.log(reason)
-        // publishLogs({
-        //     auctionId: auctionId,
-        //     action: 'CLIENT DISCONNECT',
-        //     clientId: socket.id,
-        //     data: reason
-        // })
+        publishLogs({
+            auctionId: auctionId,
+            action: 'CLIENT DISCONNECT',
+            clientId: socket.id,
+            data: reason
+        })
     })
 })
 

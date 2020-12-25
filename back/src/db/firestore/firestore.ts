@@ -6,7 +6,6 @@ admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
 })
 
-
 const firestore = admin.firestore();
 
 export const writeLog = async (logsData: IData) => {
@@ -14,6 +13,7 @@ export const writeLog = async (logsData: IData) => {
   logsData.calledAt = now
   
   const {auctionId, ...data} = logsData
+  // console.log(data)
 
   let result
   try {
