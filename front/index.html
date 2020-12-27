@@ -1,21 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet"
+        id="bootstrap-css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdn.socket.io/socket.io-3.0.3.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css" media="screen" />
     <script defer src="app.js"></script>
 </head>
+
 <body>
 
-    <div>
-        <h1>Auction</h1>
-        Current bet is <span id="betValue"> 0 </span>
+    <div class="container">
+
+        <h1 class="text-center">Auction</h1>
+        <div class="row" id="ads">
+            <div>
+                <div class="card rounded">
+                    <div class="card-image">
+                        <img class="img-fluid"
+                            src="https://imageonthefly.autodatadirect.com/images/?USER=eDealer&PW=edealer872&IMG=USC80HOC091A021001.jpg&width=440&height=262"
+                            alt="Alternate Text" />
+                    </div>
+                    <div class="card-body text-center">
+                        <div class="ad-title mb-3">
+                            <h5>Honda Accord Hybrid LT</h5>
+                        </div>
+                        <div id="app" class="m-3"></div>
+                        <div>
+                            <span> Current bet is <span id="betValue" class="card-detail-badge"> 0 </span> </span>
+                        </div>
+                        <div>
+                            <input placeholder="Your bet">
+                            <button class="ad-btn input-group-addon">MAKE BET</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
     </div>
 
-    <input placeholder="your bet">
-    <button>Send</button>
-    
 </body>
+
 </html>
