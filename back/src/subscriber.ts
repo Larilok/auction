@@ -1,5 +1,5 @@
 import subscriber from './db/redis/redis'
-import { writeLog } from './db/firestore/firestore'
+import { writeLog } from './db/firestore/queries'
 
 subscriber.nodeRedis.on('message', (channel, message) => {
   console.log(`Subscriber received message in channel '${channel}': ${message}`)
